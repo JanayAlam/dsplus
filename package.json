@@ -1,0 +1,21 @@
+{
+    "name": "standard-libjs",
+    "version": "1.0.0",
+    "description": "A standard data structures and algorithms library for javascript.",
+    "private": true,
+    "main": "standard-libjs.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "author": "Md Janay Alam",
+    "license": "MIT",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "devDependencies": {
+        "jest": "^28.1.0"
+    }
+}
+
