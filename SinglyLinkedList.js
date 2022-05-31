@@ -64,6 +64,20 @@ class SinglyLinkedList {
     };
 
     /**
+     * [Private] Match two given data if they are same or not.
+     * - Time Complexity: BigO(1)
+     * @param {any} data the first parameter
+     * @param {any} key the second parameter
+     * @returns {boolean} the truth value of the result
+     */
+    __dataCheck(data, key) {
+        if (data instanceof Array || Object.keys(data).length > 0) {
+            return JSON.stringify(data) === JSON.stringify(key);
+        }
+        return data === key;
+    }
+
+    /**
      * Given a 'key', delete the first occurrence of this key in the linked list.
      * - Time Complexity: BigO(n).
      * @param {any} key the item that will be deleted
@@ -73,14 +87,15 @@ class SinglyLinkedList {
         let prev = null;
 
         // check the element is in the first position
-        if (temp && temp.getData() === key) {
-            this.__head__.setNext(this.__head__.getNext());
+        if (temp && this.__dataCheck(temp.getData(), key)) {
+            this.__head__ = this.__head__.getNext();
+            this.__size__--;
             return;
         }
 
         // searching for the element
         // break the while loop if the desire element was found
-        while (temp && temp.getData() !== key) {
+        while (temp && !this.__dataCheck(temp.getData(), key)) {
             prev = temp;
             temp = temp.getNext();
         }
@@ -124,10 +139,11 @@ class SinglyLinkedList {
     };
 }
 
-const ll = new SinglyLinkedList(1, 5, 10);
-ll.pushBack({ name: 'Alam', age: 21 });
+const ll = new SinglyLinkedList(1, 2, 3);
+ll.pushBack([1, 2]);
+ll.pushBack({ name: 'alam', age: 21 });
 ll.pushFront(0);
-ll.pop({ name: 'Alam', age: 21 });
+ll.pop({ name: 'alam', age: 21 });
 console.log('Size: ', ll.getSize());
 console.log(ll.toString());
 
