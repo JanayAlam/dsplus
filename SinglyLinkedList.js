@@ -24,16 +24,16 @@ class SinglyLinkedList {
      * Get the value of the first node.
      * @returns {any} the value of the head node
      */
-    getHeadValue = () => {
+    getHeadValue() {
         return this.__head__.getData();
-    };
+    }
 
     /**
      * Insert element at the first position of the single linked list.
      * - Time Complexity: BigO(1).
      * @param {any} data the element which will be stored in the list
      */
-    pushFront = (data) => {
+    pushFront(data) {
         if (!this.__head__) {
             this.__head__ = new SingleNode(data);
         } else {
@@ -42,14 +42,14 @@ class SinglyLinkedList {
             this.__head__ = newNode;
         }
         this.__size__++;
-    };
+    }
 
     /**
      * Insert element at the last position of the single linked list.
      * - Time Complexity: BigO(n).
      * @param {any} data the element which will be stored in the list
      */
-    pushBack = (data) => {
+    pushBack(data) {
         if (!this.__head__) {
             this.__head__ = new SingleNode(data);
         } else {
@@ -61,7 +61,7 @@ class SinglyLinkedList {
             temp.setNext(newNode);
         }
         this.__size__++;
-    };
+    }
 
     /**
      * [Private] Match two given data if they are same or not.
@@ -82,7 +82,7 @@ class SinglyLinkedList {
      * - Time Complexity: BigO(n).
      * @param {any} key the item that will be deleted
      */
-    pop = (key) => {
+    pop(key) {
         let temp = this.__head__;
         let prev = null;
 
@@ -106,43 +106,58 @@ class SinglyLinkedList {
         // unlinking the element from the chain
         prev.setNext(temp.getNext());
         this.__size__--;
-    };
+    }
 
     /**
      * Get the size of the list.
      * @returns the size of the linked list
      */
-    getSize = () => {
+    getSize() {
         return this.__size__;
-    };
+    }
+
+    /**
+     *
+     * @param {any} data
+     * @param {string} str the
+     * @param {boolean} isLast
+     */
+    __concatStr(data, str, isLast) {
+        if (data instanceof Array || Object.keys(data).length > 0) {
+            return isLast
+                ? (str += ` ${JSON.stringify(data)} ]`)
+                : (str += ` ${JSON.stringify(data)},`);
+        }
+        if (typeof data === 'string') {
+            if (isLast) {
+                return (str += ` '${data}' ]`);
+            }
+            return (str += ` '${data}',`);
+        }
+        return isLast ? (str += ` ${data} ]`) : (str += ` ${data},`);
+    }
 
     /**
      * Returns the whole list as a string
      * @returns {string} the string of the list items
      */
-    toString = () => {
+    toString() {
         if (!this.__head__) return '[]';
         let str = '[';
         let temp = this.__head__;
         while (temp.getNext()) {
-            str +=
-                typeof temp.getData() === 'string'
-                    ? ` '${temp.getData()}',`
-                    : ` ${temp.getData()},`;
+            str = this.__concatStr(temp.getData(), str, false);
             temp = temp.getNext();
         }
-        str +=
-            typeof temp.getData() === 'string'
-                ? ` '${temp.getData()}' ]`
-                : ` ${temp.getData()} ]`;
+        str = this.__concatStr(temp.getData(), str, true);
         return str;
-    };
+    }
 }
 
 const ll = new SinglyLinkedList(1, 2, 3);
 ll.pushBack([1, 2]);
 ll.pushBack({ name: 'alam', age: 21 });
-ll.pushFront(0);
+ll.pushFront('Alam');
 ll.pop({ name: 'alam', age: 21 });
 console.log('Size: ', ll.getSize());
 console.log(ll.toString());
