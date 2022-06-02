@@ -21,6 +21,26 @@ class SinglyLinkedList {
     }
 
     /**
+     * This method makes this linked list class iterable.
+     * @returns {Object} the node object stored the linked list.
+     */
+    [Symbol.iterator]() {
+        let temp = this.__head__;
+        let prev = null;
+        return {
+            next: () => {
+                if (!temp) {
+                    return { value: null, done: true };
+                }
+                let data = temp.getData();
+                prev = temp;
+                temp = temp.getNext();
+                return { value: data, done: !prev };
+            },
+        };
+    }
+
+    /**
      * Get the value of the first node.
      * @returns {any} the value of the head node
      */
@@ -191,18 +211,6 @@ class SinglyLinkedList {
         return str;
     }
 }
-
-const ll = new SinglyLinkedList(
-    { name: 'alam', age: 21 },
-    { name: 'zeshan', age: 22 },
-    { name: 'misquat', age: 22 }
-);
-// const result = ll.find((data) => data.name === 'alam');
-// const results = ll.filter((data) => data.age >= 22);
-// console.log(result);
-// console.log(results);
-// console.log('Size: ', ll.getSize());
-// console.log(ll.toString());
 
 export default SinglyLinkedList;
 
