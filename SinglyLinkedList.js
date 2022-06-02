@@ -110,6 +110,7 @@ class SinglyLinkedList {
 
     /**
      * Get the size of the list.
+     * - Time Complexity: BigO(1).
      * @returns the size of the linked list
      */
     getSize() {
@@ -117,10 +118,46 @@ class SinglyLinkedList {
     }
 
     /**
-     *
-     * @param {any} data
-     * @param {string} str the
-     * @param {boolean} isLast
+     * Find first matched element from the list.
+     * - Time Complexity: BigO(n).
+     * @param {Function} cb the callback function which will have a element as its single argument
+     * @returns {any | null} the matched element or null if the data is not found
+     */
+    find(cb) {
+        let temp = this.__head__;
+        while (temp) {
+            if (cb(temp.getData())) {
+                return temp.getData();
+            }
+            temp = temp.getNext();
+        }
+        return null;
+    }
+
+    /**
+     * Filter the list with given instructions.
+     * - Time Complexity: BigO(n).
+     * @param {Function} cb the callback function which will have a element as its single argument
+     * @returns {Array<any>} array of filtered elements
+     */
+    filter(cb) {
+        let arr = [];
+        let temp = this.__head__;
+        while (temp) {
+            if (cb(temp.getData())) {
+                arr.push(temp.getData());
+            }
+            temp = temp.getNext();
+        }
+        return arr;
+    }
+
+    /**
+     * Concat two string to assist toString method.
+     * - Time Complexity: BigO(1).
+     * @param {any} data the first string
+     * @param {string} str the container string that will be expand
+     * @param {boolean} isLast boolean value if the data is last in the list or not?
      */
     __concatStr(data, str, isLast) {
         if (data instanceof Array || Object.keys(data).length > 0) {
@@ -138,7 +175,8 @@ class SinglyLinkedList {
     }
 
     /**
-     * Returns the whole list as a string
+     * Returns the whole list as a string.
+     * - Time Complexity: BigO(n).
      * @returns {string} the string of the list items
      */
     toString() {
@@ -154,13 +192,17 @@ class SinglyLinkedList {
     }
 }
 
-const ll = new SinglyLinkedList(1, 2, 3);
-ll.pushBack([1, 2]);
-ll.pushBack({ name: 'alam', age: 21 });
-ll.pushFront('Alam');
-ll.pop({ name: 'alam', age: 21 });
-console.log('Size: ', ll.getSize());
-console.log(ll.toString());
+const ll = new SinglyLinkedList(
+    { name: 'alam', age: 21 },
+    { name: 'zeshan', age: 22 },
+    { name: 'misquat', age: 22 }
+);
+// const result = ll.find((data) => data.name === 'alam');
+// const results = ll.filter((data) => data.age >= 22);
+// console.log(result);
+// console.log(results);
+// console.log('Size: ', ll.getSize());
+// console.log(ll.toString());
 
 export default SinglyLinkedList;
 
