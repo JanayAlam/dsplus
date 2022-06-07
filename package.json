@@ -1,9 +1,9 @@
 {
-    "name": "standard-libjs",
+    "name": "dsjs",
     "version": "1.0.0",
     "description": "A standard data structures and algorithms library for javascript.",
     "private": true,
-    "main": "standard-libjs.js",
+    "main": "dsjs.js",
     "scripts": {
         "test": "mocha -r esm test/*.test.js"
     },
