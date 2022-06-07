@@ -1,9 +1,9 @@
 {
-    "name": "dsjs",
+    "name": "dsplus",
     "version": "1.0.0",
     "description": "A standard data structures and algorithms library for javascript.",
     "private": true,
-    "main": "dsjs.js",
+    "main": "dsplus.js",
     "scripts": {
         "test": "mocha -r esm test/*.test.js"
     },
@@ -19,3 +19,4 @@
         "mocha": "^10.0.0"
     }
 }
+
