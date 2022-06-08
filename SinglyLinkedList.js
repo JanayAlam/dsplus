@@ -12,6 +12,7 @@ class SinglyLinkedList {
     constructor() {
         this.__size__ = 0;
         this.__head__ = null;
+        this.__tail__ = null;
 
         if (arguments.length > 0) {
             for (let i = 0; i < arguments.length; ++i) {
@@ -54,10 +55,11 @@ class SinglyLinkedList {
      * @param {any} data the element which will be stored in the list
      */
     pushFront(data) {
+        const newNode = new SingleNode(data);
         if (!this.__head__) {
-            this.__head__ = new SingleNode(data);
+            this.__head__ = newNode;
+            this.__tail__ = newNode;
         } else {
-            let newNode = new SingleNode(data);
             newNode.setNext(this.__head__);
             this.__head__ = newNode;
         }
@@ -66,19 +68,17 @@ class SinglyLinkedList {
 
     /**
      * Insert element at the last position of the single linked list.
-     * - Time Complexity: BigO(n).
+     * - Time Complexity: BigO(1).
      * @param {any} data the element which will be stored in the list
      */
     pushBack(data) {
+        const newNode = new SingleNode(data);
         if (!this.__head__) {
-            this.__head__ = new SingleNode(data);
+            this.__head__ = newNode;
+            this.__tail__ = newNode;
         } else {
-            let newNode = new SingleNode(data);
-            let temp = this.__head__;
-            while (temp.getNext()) {
-                temp = temp.getNext();
-            }
-            temp.setNext(newNode);
+            this.__tail__.setNext(newNode);
+            this.__tail__ = newNode;
         }
         this.__size__++;
     }
