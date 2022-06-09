@@ -42,11 +42,19 @@ class SinglyLinkedList {
     }
 
     /**
-     * Get the value of the first node.
-     * @returns {any} the value of the head node
+     * Get the first node.
+     * @returns {any} the head node
      */
-    getHeadValue() {
-        return this.__head__.getData();
+    getHead() {
+        return this.__head__;
+    }
+
+    /**
+     * Get the last node.
+     * @returns {any} the tail node
+     */
+    getTail() {
+        return this.__tail__;
     }
 
     /**
@@ -192,6 +200,16 @@ class SinglyLinkedList {
             return (str += ` '${data}',`);
         }
         return isLast ? (str += ` ${data} ]`) : (str += ` ${data},`);
+    }
+
+    /**
+     * Returns a new version of linked list in reverse order.
+     * - Time Complexity: Big0(n).
+     * @returns {SinglyLinkedList} a instance of a new singly linked list
+     */
+    reverse() {
+        // TODO
+        return new SinglyLinkedList();
     }
 
     /**

@@ -9,7 +9,7 @@ describe('singly linked list', function () {
         const sll = new SinglyLinkedList();
         sll.pushBack(obj_1);
         sll.pushFront(obj_2);
-        assert.strictEqual(obj_2, sll.getHeadValue());
+        assert.strictEqual(obj_2, sll.getHead().getData());
         assert.strictEqual(obj_1, sll.__head__.getNext().getData());
     });
 
@@ -20,7 +20,7 @@ describe('singly linked list', function () {
         const sll = new SinglyLinkedList();
         sll.pushBack(obj_1);
         sll.pushBack(obj_2);
-        assert.strictEqual(obj_1, sll.getHeadValue());
+        assert.strictEqual(obj_1, sll.getHead().getData());
         assert.strictEqual(obj_2, sll.__head__.getNext().getData());
     });
 
@@ -31,7 +31,27 @@ describe('singly linked list', function () {
         sll.pop(2);
         sll.pop(3);
         sll.pop({ num: 1, value: '1' });
-        assert.strictEqual(sll.getHeadValue(), arr);
+        assert.strictEqual(sll.getHead().getData(), arr);
+    });
+
+    it('should return the head node', () => {
+        const alam = { name: 'Alam', age: 22 };
+        const zeshan = { name: 'Zeshan', age: 23 };
+
+        const sll1 = new SinglyLinkedList(alam, zeshan);
+        const sll2 = new SinglyLinkedList(zeshan, alam);
+        assert.strict(sll1.getHead(), alam);
+        assert.strict(sll2.getHead(), zeshan);
+    });
+
+    it('should return the tail node', () => {
+        const alam = { name: 'Alam', age: 22 };
+        const zeshan = { name: 'Zeshan', age: 23 };
+
+        const sll1 = new SinglyLinkedList(alam, zeshan);
+        const sll2 = new SinglyLinkedList(zeshan, alam);
+        assert.strict(sll1.getTail(), zeshan);
+        assert.strict(sll2.getTail(), alam);
     });
 
     it('should return a valid string after calling toString method', () => {
@@ -94,6 +114,31 @@ describe('singly linked list', function () {
         assert.strictEqual(below23[2], alam);
         assert.strictEqual(aboveOrEqual23[0], zeshan);
         assert.strictEqual(empty.length, 0);
+    });
+
+    it('should return a new reverse linked list', () => {
+        const alam = { name: 'Alam', age: 22 };
+        const zeshan = { name: 'Zeshan', age: 23 };
+        const misquat = { name: 'Misquat', age: 22 };
+        const sadiya = { name: 'Sadiya', age: 22 };
+        const moon = { name: 'Moon', age: 23 };
+
+        const oldLinkedList = new SinglyLinkedList(
+            alam,
+            zeshan,
+            misquat,
+            sadiya
+        );
+        oldLinkedList.pushFront(moon);
+
+        const newLinkedList = oldLinkedList.reverse();
+
+        assert.strictEqual(sadiya, newLinkedList.getHead().getData());
+        assert.strictEqual(
+            misquat,
+            newLinkedList.getHead().getNext().getData()
+        );
+        assert.strictEqual(moon, newLinkedList.getTail().getData());
     });
 });
 
