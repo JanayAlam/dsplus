@@ -4,7 +4,7 @@ import SinglyLinkedList from '../SinglyLinkedList.js';
 describe('singly linked list', function () {
     it('should add the new node in first position of the chain', () => {
         const obj_1 = { num: 1, value: '1' };
-        const obj_2 = { num: 1, value: '2' };
+        const obj_2 = { num: 2, value: '2' };
 
         const sll = new SinglyLinkedList();
         sll.pushBack(obj_1);
@@ -15,7 +15,7 @@ describe('singly linked list', function () {
 
     it('should add the new node in last position of the chain', () => {
         const obj_1 = { num: 1, value: '1' };
-        const obj_2 = { num: 1, value: '2' };
+        const obj_2 = { num: 2, value: '2' };
 
         const sll = new SinglyLinkedList();
         sll.pushBack(obj_1);
@@ -59,7 +59,7 @@ describe('singly linked list', function () {
         );
     });
 
-    it('should return null after calling find method if the given condition does not matched', () => {
+    it('should return null after calling find method with condition not matching', () => {
         const sll = new SinglyLinkedList(
             1,
             [2, 3, 4],
@@ -71,6 +71,29 @@ describe('singly linked list', function () {
             sll.find((element) => element === 6),
             null
         );
+    });
+
+    it('should filter out right elements', () => {
+        const alam = { name: 'Alam', age: 22 };
+        const zeshan = { name: 'Zeshan', age: 23 };
+        const misquat = { name: 'Misquat', age: 22 };
+        const sadiya = { name: 'Sadiya', age: 22 };
+
+        const sll = new SinglyLinkedList(1, 'Test', [100, 200, 300]);
+        sll.pushBack(alam);
+        sll.pushFront(zeshan);
+        sll.pushFront(misquat);
+        sll.pushFront(sadiya);
+
+        const below23 = sll.filter((element) => element.age < 23);
+        const aboveOrEqual23 = sll.filter((element) => element.age >= 23);
+        const empty = sll.filter((element) => element.age === 100);
+
+        assert.strictEqual(below23[0], sadiya);
+        assert.strictEqual(below23[1], misquat);
+        assert.strictEqual(below23[2], alam);
+        assert.strictEqual(aboveOrEqual23[0], zeshan);
+        assert.strictEqual(empty.length, 0);
     });
 });
 

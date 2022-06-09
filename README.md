@@ -1,7 +1,7 @@
 # Standard Library for JavaScript
 
 To install this package run:
-`npm install standard-libjs` or `yarn add standard-libjs`
+`npm install dsplus` or `yarn add dsplus`
 
 Data Structures
 
