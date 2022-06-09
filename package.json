@@ -1,21 +1,22 @@
 {
-    "name": "standard-libjs",
+    "name": "dsplus",
     "version": "1.0.0",
     "description": "A standard data structures and algorithms library for javascript.",
     "private": true,
-    "main": "standard-libjs.js",
+    "main": "dsplus.js",
     "scripts": {
-        "test": "jest"
+        "test": "mocha -r esm test/*.test.js"
     },
     "author": "Md Janay Alam",
     "license": "MIT",
     "type": "module",
     "repository": {
         "type": "git",
-        "url": ""
+        "url": "https://github.com/JanayAlam/standard-libjs"
     },
     "devDependencies": {
-        "jest": "^28.1.0"
+        "esm": "^3.2.25",
+        "mocha": "^10.0.0"
     }
 }
 

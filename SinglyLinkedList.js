@@ -12,12 +12,33 @@ class SinglyLinkedList {
     constructor() {
         this.__size__ = 0;
         this.__head__ = null;
+        this.__tail__ = null;
 
         if (arguments.length > 0) {
             for (let i = 0; i < arguments.length; ++i) {
                 this.pushBack(arguments[i]);
             }
         }
+    }
+
+    /**
+     * This method makes this linked list class iterable.
+     * @returns {Object} the node object stored the linked list.
+     */
+    [Symbol.iterator]() {
+        let temp = this.__head__;
+        let prev = null;
+        return {
+            next: () => {
+                if (!temp) {
+                    return { value: null, done: true };
+                }
+                let data = temp.getData();
+                prev = temp;
+                temp = temp.getNext();
+                return { value: data, done: !prev };
+            },
+        };
     }
 
     /**
@@ -34,10 +55,11 @@ class SinglyLinkedList {
      * @param {any} data the element which will be stored in the list
      */
     pushFront(data) {
+        const newNode = new SingleNode(data);
         if (!this.__head__) {
-            this.__head__ = new SingleNode(data);
+            this.__head__ = newNode;
+            this.__tail__ = newNode;
         } else {
-            let newNode = new SingleNode(data);
             newNode.setNext(this.__head__);
             this.__head__ = newNode;
         }
@@ -46,19 +68,17 @@ class SinglyLinkedList {
 
     /**
      * Insert element at the last position of the single linked list.
-     * - Time Complexity: BigO(n).
+     * - Time Complexity: BigO(1).
      * @param {any} data the element which will be stored in the list
      */
     pushBack(data) {
+        const newNode = new SingleNode(data);
         if (!this.__head__) {
-            this.__head__ = new SingleNode(data);
+            this.__head__ = newNode;
+            this.__tail__ = newNode;
         } else {
-            let newNode = new SingleNode(data);
-            let temp = this.__head__;
-            while (temp.getNext()) {
-                temp = temp.getNext();
-            }
-            temp.setNext(newNode);
+            this.__tail__.setNext(newNode);
+            this.__tail__ = newNode;
         }
         this.__size__++;
     }
@@ -110,6 +130,7 @@ class SinglyLinkedList {
 
     /**
      * Get the size of the list.
+     * - Time Complexity: BigO(1).
      * @returns the size of the linked list
      */
     getSize() {
@@ -117,10 +138,46 @@ class SinglyLinkedList {
     }
 
     /**
-     *
-     * @param {any} data
-     * @param {string} str the
-     * @param {boolean} isLast
+     * Find first matched element from the list.
+     * - Time Complexity: BigO(n).
+     * @param {Function} cb the callback function which will have a element as its single argument
+     * @returns {any | null} the matched element or null if the data is not found
+     */
+    find(cb) {
+        let temp = this.__head__;
+        while (temp) {
+            if (cb(temp.getData())) {
+                return temp.getData();
+            }
+            temp = temp.getNext();
+        }
+        return null;
+    }
+
+    /**
+     * Filter the list with given instructions.
+     * - Time Complexity: BigO(n).
+     * @param {Function} cb the callback function which will have a element as its single argument
+     * @returns {Array<any>} array of filtered elements
+     */
+    filter(cb) {
+        let arr = [];
+        let temp = this.__head__;
+        while (temp) {
+            if (cb(temp.getData())) {
+                arr.push(temp.getData());
+            }
+            temp = temp.getNext();
+        }
+        return arr;
+    }
+
+    /**
+     * Concat two string to assist toString method.
+     * - Time Complexity: BigO(1).
+     * @param {any} data the first string
+     * @param {string} str the container string that will be expand
+     * @param {boolean} isLast boolean value if the data is last in the list or not?
      */
     __concatStr(data, str, isLast) {
         if (data instanceof Array || Object.keys(data).length > 0) {
@@ -138,7 +195,8 @@ class SinglyLinkedList {
     }
 
     /**
-     * Returns the whole list as a string
+     * Returns the whole list as a string.
+     * - Time Complexity: BigO(n).
      * @returns {string} the string of the list items
      */
     toString() {
@@ -153,14 +211,6 @@ class SinglyLinkedList {
         return str;
     }
 }
-
-const ll = new SinglyLinkedList(1, 2, 3);
-ll.pushBack([1, 2]);
-ll.pushBack({ name: 'alam', age: 21 });
-ll.pushFront('Alam');
-ll.pop({ name: 'alam', age: 21 });
-console.log('Size: ', ll.getSize());
-console.log(ll.toString());
 
 export default SinglyLinkedList;
 
