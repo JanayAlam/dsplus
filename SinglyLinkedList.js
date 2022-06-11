@@ -42,11 +42,90 @@ class SinglyLinkedList {
     }
 
     /**
-     * Get the value of the first node.
-     * @returns {any} the value of the head node
+     * [Private] Match two given data if they are same or not.
+     * - Time Complexity: BigO(1)
+     * @param {any} data the first parameter
+     * @param {any} key the second parameter
+     * @returns {boolean} the truth value of the result
      */
-    getHeadValue() {
-        return this.__head__.getData();
+    __dataCheck(data, key) {
+        if (data instanceof Array || Object.keys(data).length > 0) {
+            return JSON.stringify(data) === JSON.stringify(key);
+        }
+        return data === key;
+    }
+
+    /**
+     * Concat two string to assist toString method.
+     * - Time Complexity: BigO(1).
+     * @param {any} data the first string
+     * @param {string} str the container string that will be expand
+     * @param {boolean} isLast boolean value if the data is last in the list or not?
+     */
+    __concatStr(data, str, isLast) {
+        if (data instanceof Array || Object.keys(data).length > 0) {
+            return isLast
+                ? (str += ` ${JSON.stringify(data)} ]`)
+                : (str += ` ${JSON.stringify(data)},`);
+        }
+        if (typeof data === 'string') {
+            if (isLast) {
+                return (str += ` '${data}' ]`);
+            }
+            return (str += ` '${data}',`);
+        }
+        return isLast ? (str += ` ${data} ]`) : (str += ` ${data},`);
+    }
+
+    /**
+     * Set the first node.
+     * - Time Complexity: BigO(1).
+     */
+    __setHead(node) {
+        this.__head__ = node;
+    }
+
+    /**
+     * Get the first node.
+     * - Time Complexity: BigO(1).
+     * @returns {any} the head node
+     */
+    getHead() {
+        return this.__head__;
+    }
+
+    /**
+     * Set the last node.
+     * - Time Complexity: BigO(1).
+     */
+    __setTail(node) {
+        this.__tail__ = node;
+    }
+
+    /**
+     * Get the last node.
+     * - Time Complexity: BigO(1).
+     * @returns {any} the tail node
+     */
+    getTail() {
+        return this.__tail__;
+    }
+
+    /**
+     * Set the size of singly linked list.
+     * - Time Complexity: BigO(1).
+     */
+    __setSize(size) {
+        this.__size__ = size;
+    }
+
+    /**
+     * Get the size of the list.
+     * - Time Complexity: BigO(1).
+     * @returns {number} the size of the linked list
+     */
+    getSize() {
+        return this.__size__;
     }
 
     /**
@@ -84,20 +163,6 @@ class SinglyLinkedList {
     }
 
     /**
-     * [Private] Match two given data if they are same or not.
-     * - Time Complexity: BigO(1)
-     * @param {any} data the first parameter
-     * @param {any} key the second parameter
-     * @returns {boolean} the truth value of the result
-     */
-    __dataCheck(data, key) {
-        if (data instanceof Array || Object.keys(data).length > 0) {
-            return JSON.stringify(data) === JSON.stringify(key);
-        }
-        return data === key;
-    }
-
-    /**
      * Given a 'key', delete the first occurrence of this key in the linked list.
      * - Time Complexity: BigO(n).
      * @param {any} key the item that will be deleted
@@ -126,15 +191,6 @@ class SinglyLinkedList {
         // unlinking the element from the chain
         prev.setNext(temp.getNext());
         this.__size__--;
-    }
-
-    /**
-     * Get the size of the list.
-     * - Time Complexity: BigO(1).
-     * @returns the size of the linked list
-     */
-    getSize() {
-        return this.__size__;
     }
 
     /**
@@ -173,25 +229,29 @@ class SinglyLinkedList {
     }
 
     /**
-     * Concat two string to assist toString method.
-     * - Time Complexity: BigO(1).
-     * @param {any} data the first string
-     * @param {string} str the container string that will be expand
-     * @param {boolean} isLast boolean value if the data is last in the list or not?
+     * Returns a new version of linked list in reverse order.
+     * - Time Complexity: Big0(n).
+     * @returns {SinglyLinkedList | null} new singly linked list
      */
-    __concatStr(data, str, isLast) {
-        if (data instanceof Array || Object.keys(data).length > 0) {
-            return isLast
-                ? (str += ` ${JSON.stringify(data)} ]`)
-                : (str += ` ${JSON.stringify(data)},`);
+    reverse() {
+        let prev = null;
+        let next = null;
+        let curr = this.__head__;
+        const tail = curr;
+        while (curr) {
+            next = curr.getNext();
+            curr.setNext(prev);
+            prev = curr;
+            curr = next;
         }
-        if (typeof data === 'string') {
-            if (isLast) {
-                return (str += ` '${data}' ]`);
-            }
-            return (str += ` '${data}',`);
-        }
-        return isLast ? (str += ` ${data} ]`) : (str += ` ${data},`);
+
+        const sll = new SinglyLinkedList();
+        tail.setNext(null);
+        sll.__setSize(this.__size__);
+        sll.__setHead(prev);
+        sll.__setTail(tail);
+
+        return sll;
     }
 
     /**
