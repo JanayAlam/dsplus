@@ -132,7 +132,6 @@ describe('singly linked list', function () {
         oldLinkedList.pushFront(moon);
 
         const newLinkedList = oldLinkedList.reverse();
-
         assert.strictEqual(sadiya, newLinkedList.getHead().getData());
         assert.strictEqual(
             misquat,

@@ -78,6 +78,14 @@ class SinglyLinkedList {
     }
 
     /**
+     * Set the first node.
+     * - Time Complexity: BigO(1).
+     */
+    __setHead(node) {
+        this.__head__ = node;
+    }
+
+    /**
      * Get the first node.
      * - Time Complexity: BigO(1).
      * @returns {any} the head node
@@ -87,12 +95,28 @@ class SinglyLinkedList {
     }
 
     /**
+     * Set the last node.
+     * - Time Complexity: BigO(1).
+     */
+    __setTail(node) {
+        this.__tail__ = node;
+    }
+
+    /**
      * Get the last node.
      * - Time Complexity: BigO(1).
      * @returns {any} the tail node
      */
     getTail() {
         return this.__tail__;
+    }
+
+    /**
+     * Set the size of singly linked list.
+     * - Time Complexity: BigO(1).
+     */
+    __setSize(size) {
+        this.__size__ = size;
     }
 
     /**
@@ -207,11 +231,27 @@ class SinglyLinkedList {
     /**
      * Returns a new version of linked list in reverse order.
      * - Time Complexity: Big0(n).
-     * @returns {SinglyLinkedList} a instance of a new singly linked list
+     * @returns {SinglyLinkedList | null} new singly linked list
      */
     reverse() {
-        // TODO
-        return new SinglyLinkedList();
+        let prev = null;
+        let next = null;
+        let curr = this.__head__;
+        const tail = curr;
+        while (curr) {
+            next = curr.getNext();
+            curr.setNext(prev);
+            prev = curr;
+            curr = next;
+        }
+
+        const sll = new SinglyLinkedList();
+        tail.setNext(null);
+        sll.__setSize(this.__size__);
+        sll.__setHead(prev);
+        sll.__setTail(tail);
+
+        return sll;
     }
 
     /**
