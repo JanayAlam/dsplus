@@ -122,6 +122,8 @@ describe('singly linked list', function () {
         const misquat = { name: 'Misquat', age: 22 };
         const sadiya = { name: 'Sadiya', age: 22 };
         const moon = { name: 'Moon', age: 23 };
+        const shakil = { name: 'Shakil', age: 24 };
+        const nahla = { name: 'Nahla', age: 24 };
 
         const oldLinkedList = new SinglyLinkedList(
             alam,
@@ -138,6 +140,11 @@ describe('singly linked list', function () {
             newLinkedList.getHead().getNext().getData()
         );
         assert.strictEqual(moon, newLinkedList.getTail().getData());
+
+        newLinkedList.pushBack(shakil);
+        newLinkedList.pushFront(nahla);
+        assert.strictEqual(shakil, newLinkedList.getTail().getData());
+        assert.strictEqual(nahla, newLinkedList.getHead().getData());
     });
 });
 
